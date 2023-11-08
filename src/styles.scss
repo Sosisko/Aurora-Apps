@@ -1,0 +1,48 @@
+@import "~normalize.css";
+@import "primeng/resources/themes/lara-dark-teal/theme.css";
+@import "primeng/resources/primeng.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Wix+Madefor+Display:wght@400;500;600;700&display=swap"); /* font-family: 'Wix Madefor Display', sans-serif; */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-weight: 400;
+  font-family: "Lato", sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  color: #d8dcdd;
+}
+h1 {
+  font-size: 54px;
+  font-weight: 700;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #a2aab3;
+}
+
+button {
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1920px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin: 0 auto;
+}
+
+.p-dropdown {
+  width: 167px;
+}

@@ -1,0 +1,153 @@
+<header class="header">
+  <nav class="nav container">
+    <div class="nav-menu">
+      <ul>
+        <li><a href="#">Главная</a></li>
+        <li><a href="#">Портфолио</a></li>
+        <li><a href="#">Сервисы</a></li>
+        <li><a href="#">О компании</a></li>
+        <li><a href="#">Контакты</a></li>
+      </ul>
+    </div>
+    <img class="nav-logo" src="assets/images/logo.svg" alt="logo" />
+    <div class="nav-right">
+      <div class="select-lang-wrap">
+        <p-dropdown
+          class="select-lang"
+          [options]="languages"
+          [(ngModel)]="selectedLanguage"
+          optionLabel="lang"
+          placeholder="{{ selectedLanguage }}"
+        ></p-dropdown>
+      </div>
+      <div class="login"><a href="#">SIGN IN</a></div>
+    </div>
+  </nav>
+  <section class="carousel-section" id="carousel-section">
+    <div class="card container">
+      <p-carousel
+        [value]="slides"
+        [numVisible]="1"
+        [numScroll]="1"
+        [circular]="true"
+        [responsiveOptions]="responsiveOptions"
+      >
+        <ng-template let-slide pTemplate="item">
+          <div class="slider-wrapper">
+            <div class="slider-text">
+              <h1>{{ slide.title }}</h1>
+              <p>{{ slide.description }}</p>
+              <p-button pRipple label="ЗАПОЛНИТЬ БРИФ" [text]="true"></p-button>
+            </div>
+
+            <div class="slider-img">
+              <img
+                src="../../../assets/images/slider/{{ slide.image }}"
+                alt=""
+              />
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </section>
+</header>
+<section class="section-2" id="section-2">
+  <div class="container">
+    <div class="section-2-title">
+      <h2>
+        Оказываем услуги по проектированию и разработке программных продуктов
+      </h2>
+    </div>
+    <div class="section-2-description">
+      <p>
+        Наши услуги — это разработка мобильных приложений, веб-сервисов и
+        веб-сайтов, сопровождение и функциональный мониторинг информационных
+        систем, предоставление VDS/VPS хостинга для стабильной работы вашего
+        проекта.
+      </p>
+    </div>
+    <div class="product-cards-wrapper">
+      <ul class="cards">
+        <li class="card-item">
+          <img src="../../../assets/images/cards/web.svg" alt="web.svg" />
+          <div class="card-text">
+            <h3>WEB-РАЗРАБОТКА</h3>
+            <p>
+              Проектируем структуру и создаем интерфейс, занимаемся frontend и
+              backend разработкой. Разработка панелей управления и
+              администрирования.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+        <li class="card-item">
+          <img src="../../../assets/images/cards/mobile.svg" alt="mobile.svg" />
+          <div class="card-text">
+            <h3>MOBILE-РАЗРАБОТКА</h3>
+            <p>
+              Мы делаем нативные и кроссплатформенные приложения для iOS,
+              Android, Huawei, Roku, Apple TV. UI/UX дизайн, технологии AR/VR и
+              интеграция с любыми существующими решениями.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+        <li class="card-item">
+          <img src="../../../assets/images/cards/ux-ui.svg" alt="ux-ui.svg" />
+          <div class="card-text">
+            <h3>Дизайнерские услуги</h3>
+            <p>
+              Мы занимаемся дизайном веб и мобильных приложений. Разрабатываем
+              логотип и брендбук, создаем презентации и инфографику, помогаем с
+              позиционированием бренда. Также проводим дизайн-аудит.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+        <li class="card-item">
+          <img
+            src="../../../assets/images/cards/analitics.svg"
+            alt="analitics.svg"
+          />
+          <div class="card-text">
+            <h3>Консалтинг и аналитика</h3>
+            <p>
+              Мы проводим исследования рынка, проводим аудит ИТ-инфраструктуры и
+              рекомендуем подходящие решения. Оценить инвестиционную
+              привлекательность ИТ-проектов и риски их реализации.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+        <li class="card-item">
+          <img
+            src="../../../assets/images/cards/support.svg"
+            alt="support.svg"
+          />
+          <div class="card-text">
+            <h3>Поддержка</h3>
+            <p>
+              Мы занимаемся продуктовой аналитикой и технической поддержкой.
+              Помогаем продвигать продукт целевой аудитории.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+        <li class="card-item">
+          <img src="../../../assets/images/cards/other.svg" alt="other.svg" />
+          <div class="card-text">
+            <h3>Другие услуги</h3>
+            <p>
+              Создаем высоконагруженные серверные приложения для работы с AI,
+              Big Data, нейронными сетями. Интегрируем программное обеспечение с
+              любыми устройствами и сторонними ИТ-системами, в том числе с
+              системами управления BPM ERP на базе SAP и другими решениями.
+            </p>
+            <a href="">ПОДРОБНЕЕ </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
