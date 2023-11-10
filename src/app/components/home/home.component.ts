@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import * as intlTelInput from 'intl-tel-input';
 interface Language {
   lang: string;
   code: string;
@@ -20,9 +21,12 @@ export class HomeComponent implements OnInit {
   languages: Language[] | undefined;
   selectedLanguage: Language | undefined;
 
-  responsiveOptions: any[] | undefined;
+  responsiveSliderOptions: any[] | undefined;
 
   slides!: any[];
+
+  @Output() visibleModalBriefing: boolean = false;
+
   constructor(private primengConfig: PrimeNGConfig) {}
   ngOnInit() {
     this.primengConfig.ripple = true;
@@ -33,7 +37,7 @@ export class HomeComponent implements OnInit {
     ];
     this.selectedLanguage = this.languages.find((lang) => lang.code === 'RU');
 
-    this.responsiveOptions = [
+    this.responsiveSliderOptions = [
       {
         breakpoint: '1199px',
         numVisible: 1,
@@ -71,5 +75,8 @@ export class HomeComponent implements OnInit {
           'Проектируем структуру и создаем интерфейс, занимаемся frontend и backend разработкой. Разработка панелей управления и администрирования.',
       },
     ];
+  }
+  showDialog() {
+    this.visibleModalBriefing = true;
   }
 }

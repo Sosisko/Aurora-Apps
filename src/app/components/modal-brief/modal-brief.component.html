@@ -1,0 +1,89 @@
+<p-dialog
+  #modal
+  header="Бриф на разработку приложения"
+  [(visible)]="visibleModalBriefing"
+  [modal]="true"
+  (onHide)="closeModal()"
+  [style]="{ width: '80vw', height: '80vh' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="theme-app">
+      <h3>тематика приложения</h3>
+    </div>
+    <div class="client-contacts">
+      <div class="client-contacts-item">
+        <span class="p-float-label">
+          <input pInputText id="name" formControlName="name" />
+          <label htmlFor="name">Ваше Имя</label>
+          <div
+            *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+            class="validation"
+          >
+            <small *ngIf="(form.get('name')?.errors)?.['required']"
+              >Обязательное поле</small
+            >
+          </div>
+        </span>
+      </div>
+      <div class="client-contacts-item">
+        <span class="p-float-label">
+          <input
+            [mask]="phoneMask"
+            pInputText
+            id="phone"
+            formControlName="phone"
+            placeholder=""
+          />
+          <!-- <label htmlFor="phone">Телефон</label> -->
+          <div
+            *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched"
+            class="validation"
+          >
+            <small *ngIf="(form.get('phone')?.errors)?.['required']"
+              >Обязательное поле</small
+            >
+          </div>
+        </span>
+      </div>
+
+      <div class="client-contacts-item">
+        <span class="p-float-label">
+          <input pInputText id="email" formControlName="email" />
+          <label htmlFor="email">Email</label>
+          <div
+            *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+            class="validation"
+          >
+            <small *ngIf="(form.get('email')?.errors)?.['required']"
+              >Обязательное поле</small
+            >
+            <small *ngIf="(form.get('email')?.errors)?.['email']"
+              >Введите корректный email</small
+            >
+          </div>
+        </span>
+      </div>
+
+      <div class="client-contacts-item">
+        <span class="p-float-label">
+          <input pInputText id="social" formControlName="social" />
+          <label htmlFor="social">Мессенджер/соцсеть (можно ссылку)</label>
+        </span>
+      </div>
+
+      <div class="client-contacts-item">
+        <span class="p-float-label">
+          <input pInputText id="site" formControlName="site" />
+          <label htmlFor="site"
+            >Если у вас есть сайт, с которым нужна интеграция, укажите
+            его</label
+          >
+        </span>
+      </div>
+    </div>
+
+    <p-button type="submit">Отправить</p-button>
+  </form>
+</p-dialog>

@@ -2,10 +2,10 @@
   <nav class="nav container">
     <div class="nav-menu">
       <ul>
-        <li><a href="#">Главная</a></li>
+        <li><a routerLink="/">Главная</a></li>
         <li><a href="#">Портфолио</a></li>
         <li><a href="#">Сервисы</a></li>
-        <li><a href="#">О компании</a></li>
+        <li><a routerLink="/about">О компании</a></li>
         <li><a href="#">Контакты</a></li>
       </ul>
     </div>
@@ -21,8 +21,11 @@
         ></p-dropdown>
       </div>
       <div class="login"><a href="#">SIGN IN</a></div>
+
     </div>
   </nav>
+
+
   <section class="carousel-section" id="carousel-section">
     <div class="card container">
       <p-carousel
@@ -30,17 +33,16 @@
         [numVisible]="1"
         [numScroll]="1"
         [circular]="true"
-        [responsiveOptions]="responsiveOptions"
+        [responsiveOptions]="responsiveSliderOptions"
       >
         <ng-template let-slide pTemplate="item">
           <div class="slider-wrapper">
             <div class="slider-text">
               <h1>{{ slide.title }}</h1>
               <p>{{ slide.description }}</p>
-              <p-button pRipple label="ЗАПОЛНИТЬ БРИФ" [text]="true"></p-button>
+              <p-button pRipple label="ЗАПОЛНИТЬ БРИФ" [text]="true" (click)="showDialog()"></p-button>
             </div>
-
-            <div class="slider-img">
+           <div class="slider-img">
               <img
                 src="assets/images/slider/{{ slide.image }}"
                 alt=""
@@ -52,6 +54,10 @@
     </div>
   </section>
 </header>
+
+<app-modal-brief  [(visibleModalBriefing)]="visibleModalBriefing"></app-modal-brief>
+
+
 <section class="section-2" id="section-2">
   <div class="container">
     <div class="section-2-title">
@@ -67,6 +73,7 @@
         проекта.
       </p>
     </div>
+
     <div class="product-cards-wrapper">
       <ul class="cards">
         <li class="card-item">
@@ -150,4 +157,7 @@
       </ul>
     </div>
   </div>
+
+
+
 </section>

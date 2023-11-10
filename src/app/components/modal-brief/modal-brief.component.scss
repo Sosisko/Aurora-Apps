@@ -1,0 +1,22 @@
+
+
+.client-contacts-item {
+  margin-bottom: 30px;
+  input {
+    width: 100%;
+  }
+}
+
+input {
+  position: relative;
+
+  &.ng-invalid.ng-touched {
+    border: 1px solid #fca5a5;
+  }
+}
+small {
+  position: absolute;
+  bottom: -20px;
+  color: #fca5a5;
+}
+
