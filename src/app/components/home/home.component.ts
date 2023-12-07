@@ -1,6 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import * as intlTelInput from 'intl-tel-input';
 interface Language {
   lang: string;
   code: string;
@@ -79,4 +78,5 @@ export class HomeComponent implements OnInit {
   showDialog() {
     this.visibleModalBriefing = true;
   }
+
 }

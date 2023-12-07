@@ -44,7 +44,7 @@ button {
 }
 
 .p-dropdown {
-  width: 167px;
+  width: 200px;
 }
 
 .p-dialog-content, .p-dialog-header {
@@ -56,4 +56,8 @@ button {
 }
 .country-list .country-name {
   color: #293B51;
+}
+
+.p-inputtext.ng-dirty.ng-invalid {
+  border: none;
 }

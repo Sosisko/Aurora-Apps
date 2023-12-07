@@ -4,86 +4,450 @@
   [(visible)]="visibleModalBriefing"
   [modal]="true"
   (onHide)="closeModal()"
-  [style]="{ width: '80vw', height: '80vh' }"
+  [style]="{ width: '80vw', height: '90vh' }"
   [draggable]="false"
   [resizable]="false"
 >
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="theme-app">
-      <h3>тематика приложения</h3>
-    </div>
-    <div class="client-contacts">
-      <div class="client-contacts-item">
-        <span class="p-float-label">
-          <input pInputText id="name" formControlName="name" />
-          <label htmlFor="name">Ваше Имя</label>
-          <div
-            *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
-            class="validation"
-          >
-            <small *ngIf="(form.get('name')?.errors)?.['required']"
-              >Обязательное поле</small
-            >
+<!-- <ng-container *ngIf="formSendSuccess; else forma">
+  <div>Спасибо! Скоро мы свяжемся с вами!</div>
+</ng-container>
+  <ng-template #forma
+    ><form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-content">
+        <div class="left-side-form">
+          <div class="theme-app">
+            <h3>Тематика приложения</h3>
+            <div class="theme-app-select">
+              <p-dropdown
+                formControlName="theme"
+                [showClear]="true"
+                [options]="themeList"
+                [(ngModel)]="selectedThemeItem"
+                optionLabel="name"
+                placeholder="Выберете опцию"
+              ></p-dropdown>
+            </div>
           </div>
-        </span>
-      </div>
-      <div class="client-contacts-item">
-        <span class="p-float-label">
-          <input
-            [mask]="phoneMask"
-            pInputText
-            id="phone"
-            formControlName="phone"
-            placeholder=""
-          />
-          <!-- <label htmlFor="phone">Телефон</label> -->
-          <div
-            *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched"
-            class="validation"
-          >
-            <small *ngIf="(form.get('phone')?.errors)?.['required']"
-              >Обязательное поле</small
-            >
+          <div class="os">
+            <h3>Выбор операционной системы</h3>
+            <div class="checkbox-os">
+              <p-checkbox
+                formControlName="os"
+                value="Android"
+                [(ngModel)]="selectedOS"
+                label="Android"
+              ></p-checkbox>
+              <p-checkbox
+                formControlName="os"
+                value="IOS"
+                [(ngModel)]="selectedOS"
+                label="IOS"
+              ></p-checkbox>
+            </div>
           </div>
-        </span>
-      </div>
-
-      <div class="client-contacts-item">
-        <span class="p-float-label">
-          <input pInputText id="email" formControlName="email" />
-          <label htmlFor="email">Email</label>
-          <div
-            *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
-            class="validation"
-          >
-            <small *ngIf="(form.get('email')?.errors)?.['required']"
-              >Обязательное поле</small
-            >
-            <small *ngIf="(form.get('email')?.errors)?.['email']"
-              >Введите корректный email</small
-            >
+          <div class="checkbox-lang">
+            <h3>Язык интерфейса</h3>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Русский"
+              label="Русский"
+            ></p-checkbox>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Английский"
+              label="Английский"
+            ></p-checkbox>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Другой"
+              label="Другой"
+            ></p-checkbox>
           </div>
-        </span>
+          <div class="service">
+            <h3>Дополнительные услуги</h3>
+            <div class="service-select">
+              <p-dropdown
+                formControlName="service"
+                [showClear]="true"
+                [options]="serviceList"
+                optionLabel="name"
+                placeholder="Выберете опцию"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="budget">
+            <h3>Планируемый бюджет на разработку</h3>
+            <div class="budget-radio">
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="5-10"
+                  formControlName="budget"
+                  value="5 000$-10 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="5-10">5 000$ - 10 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="10-15"
+                  formControlName="budget"
+                  value="10 000$-15 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="10-15">10 000$ - 15 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="15-30"
+                  formControlName="budget"
+                  value="15 000$-30 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="15-30">15 000$ - 30 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="other"
+                  formControlName="budget"
+                  value="более 30 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="other">более 30 000$</label>
+              </div>
+            </div>
+          </div>
+          <div class="client-contacts">
+            <h3>Данные для обратной связи</h3>
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="name" formControlName="name" />
+                <label htmlFor="name">Ваше Имя</label>
+                <div
+                  *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('name')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                </div>
+              </span>
+            </div>
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input
+                  [validation]="false"
+                  [mask]="phoneMask"
+                  pInputText
+                  id="phone"
+                  formControlName="phone"
+                  placeholder=""
+                  [minlength]="quantityPhoneNumbers"
+                />
+                <div
+                  *ngIf="
+                    form.get('phone')?.invalid && form.get('phone')?.touched
+                  "
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('phone')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                  <small *ngIf="(form.get('phone')?.errors)?.['minlength']"
+                    >Слишком кроткое значение
+                  </small>
+                </div>
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="email" formControlName="email" />
+                <label htmlFor="email">Email</label>
+                <div
+                  *ngIf="
+                    form.get('email')?.invalid && form.get('email')?.touched
+                  "
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('email')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                  <small *ngIf="(form.get('email')?.errors)?.['email']"
+                    >Введите корректный email</small
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="social" formControlName="social" />
+                <label htmlFor="social"
+                  >Мессенджер/соцсеть (можно ссылку)</label
+                >
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="site" formControlName="site" />
+                <label htmlFor="site"
+                  >Если у вас есть сайт, с которым нужна интеграция, укажите
+                  его</label
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="right-side-form">
+          <div class="other-options">
+            <h3>Базовые требования приложению (модули подключения)</h3>
+            <div class="other-options-list">
+              <p-checkbox
+                *ngFor="let option of otherOptions"
+                [(ngModel)]="selectedOtherOptions"
+                formControlName="otherOptions"
+                value="{{ option.name }}"
+                label="{{ option.name }}"
+              ></p-checkbox>
+            </div>
+          </div>
+          <div class="text-area">
+            <h3>Дополнительные пожелания</h3>
+            <textarea
+              rows="5"
+              cols="30"
+              maxlength="300"
+              pInputTextarea
+              formControlName="textArea"
+            ></textarea>
+          </div>
+        </div>
       </div>
 
-      <div class="client-contacts-item">
-        <span class="p-float-label">
-          <input pInputText id="social" formControlName="social" />
-          <label htmlFor="social">Мессенджер/соцсеть (можно ссылку)</label>
-        </span>
+      <p-button [loading]="loading" type="submit">Отправить</p-button>
+    </form></ng-template
+  > -->
+  <div *ngIf="formSendSuccess">Спасибо! Скоро мы свяжемся с вами!</div>
+  <form *ngIf="!formSendSuccess" [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-content">
+        <div class="left-side-form">
+          <div class="theme-app">
+            <h3>Тематика приложения</h3>
+            <div class="theme-app-select">
+              <p-dropdown
+                formControlName="theme"
+                [showClear]="true"
+                [options]="themeList"
+                [(ngModel)]="selectedThemeItem"
+                optionLabel="name"
+                placeholder="Выберете опцию"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="os">
+            <h3>Выбор операционной системы</h3>
+            <div class="checkbox-os">
+              <p-checkbox
+                formControlName="os"
+                value="Android"
+                [(ngModel)]="selectedOS"
+                label="Android"
+              ></p-checkbox>
+              <p-checkbox
+                formControlName="os"
+                value="IOS"
+                [(ngModel)]="selectedOS"
+                label="IOS"
+              ></p-checkbox>
+            </div>
+          </div>
+          <div class="checkbox-lang">
+            <h3>Язык интерфейса</h3>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Русский"
+              label="Русский"
+            ></p-checkbox>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Английский"
+              label="Английский"
+            ></p-checkbox>
+            <p-checkbox
+              [(ngModel)]="selectedLang"
+              formControlName="lang"
+              value="Другой"
+              label="Другой"
+            ></p-checkbox>
+          </div>
+          <div class="service">
+            <h3>Дополнительные услуги</h3>
+            <div class="service-select">
+              <p-dropdown
+                formControlName="service"
+                [showClear]="true"
+                [options]="serviceList"
+                optionLabel="name"
+                placeholder="Выберете опцию"
+              ></p-dropdown>
+            </div>
+          </div>
+          <div class="budget">
+            <h3>Планируемый бюджет на разработку</h3>
+            <div class="budget-radio">
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="5-10"
+                  formControlName="budget"
+                  value="5 000$-10 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="5-10">5 000$ - 10 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="10-15"
+                  formControlName="budget"
+                  value="10 000$-15 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="10-15">10 000$ - 15 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="15-30"
+                  formControlName="budget"
+                  value="15 000$-30 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="15-30">15 000$ - 30 000$</label>
+              </div>
+              <div class="budget-radio-item">
+                <p-radioButton
+                  inputId="other"
+                  formControlName="budget"
+                  value="более 30 000$"
+                  [(ngModel)]="selectedBudget"
+                ></p-radioButton>
+                <label for="other">более 30 000$</label>
+              </div>
+            </div>
+          </div>
+          <div class="client-contacts">
+            <h3>Данные для обратной связи</h3>
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="name" formControlName="name" />
+                <label htmlFor="name">Ваше Имя</label>
+                <div
+                  *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('name')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                </div>
+              </span>
+            </div>
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input
+                  [validation]="false"
+                  [mask]="phoneMask"
+                  pInputText
+                  id="phone"
+                  formControlName="phone"
+                  placeholder=""
+                  [minlength]="quantityPhoneNumbers"
+                />
+                <div
+                  *ngIf="
+                    form.get('phone')?.invalid && form.get('phone')?.touched
+                  "
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('phone')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                  <small *ngIf="(form.get('phone')?.errors)?.['minlength']"
+                    >Слишком кроткое значение
+                  </small>
+                </div>
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="email" formControlName="email" />
+                <label htmlFor="email">Email</label>
+                <div
+                  *ngIf="
+                    form.get('email')?.invalid && form.get('email')?.touched
+                  "
+                  class="validation"
+                >
+                  <small *ngIf="(form.get('email')?.errors)?.['required']"
+                    >Обязательное поле</small
+                  >
+                  <small *ngIf="(form.get('email')?.errors)?.['email']"
+                    >Введите корректный email</small
+                  >
+                </div>
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="social" formControlName="social" />
+                <label htmlFor="social"
+                  >Мессенджер/соцсеть (можно ссылку)</label
+                >
+              </span>
+            </div>
+
+            <div class="client-contacts-item">
+              <span class="p-float-label">
+                <input pInputText id="site" formControlName="site" />
+                <label htmlFor="site"
+                  >Если у вас есть сайт, с которым нужна интеграция, укажите
+                  его</label
+                >
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="right-side-form">
+          <div class="other-options">
+            <h3>Базовые требования приложению (модули подключения)</h3>
+            <div class="other-options-list">
+              <p-checkbox
+                *ngFor="let option of otherOptions"
+                [(ngModel)]="selectedOtherOptions"
+                formControlName="otherOptions"
+                value="{{ option.name }}"
+                label="{{ option.name }}"
+              ></p-checkbox>
+            </div>
+          </div>
+          <div class="text-area">
+            <h3>Дополнительные пожелания</h3>
+            <textarea
+              rows="5"
+              cols="30"
+              maxlength="300"
+              pInputTextarea
+              formControlName="textArea"
+            ></textarea>
+          </div>
+        </div>
       </div>
 
-      <div class="client-contacts-item">
-        <span class="p-float-label">
-          <input pInputText id="site" formControlName="site" />
-          <label htmlFor="site"
-            >Если у вас есть сайт, с которым нужна интеграция, укажите
-            его</label
-          >
-        </span>
-      </div>
-    </div>
-
-    <p-button type="submit">Отправить</p-button>
-  </form>
+      <p-button [loading]="loading" type="submit">Отправить</p-button>
+  </form> 
 </p-dialog>

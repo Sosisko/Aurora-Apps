@@ -11,8 +11,11 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { ModalBriefComponent } from './components/modal-brief/modal-brief.component';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputMaskModule } from 'primeng/inputmask';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
 
 
 @NgModule({
@@ -29,9 +32,12 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
-    InputMaskModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    CheckboxModule,
+    RadioButtonModule,
+    InputTextareaModule
+
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent],

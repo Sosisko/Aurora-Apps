@@ -13,6 +13,7 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import * as intlTelInput from 'intl-tel-input';
 import { Dialog } from 'primeng/dialog';
 import { Subscription } from 'rxjs';
+import { FormService } from 'src/app/services/form-service';
 
 @Component({
   selector: 'app-modal-brief',
@@ -26,15 +27,33 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
     new EventEmitter<boolean>();
   form!: FormGroup;
   private modalSubscription!: Subscription;
+  formSendSuccess = false;
   phoneMask: string = '';
-  dialCode: string ='';
+  dialCode: string = '';
+  quantityPhoneNumbers!: number;
+  loading: boolean = false;
+
+  themeList: any[] = [];
+  serviceList: any[] = [];
+  otherOptions: any[] = [];
+  selectedThemeItem: string | undefined = '';
+  selectedOS: string[] = [];
+  selectedLang: string[] = [];
+  selectedBudget: string[] = [];
+  selectedOtherOptions: string[] = [];
+
+  selectedCountryData: any;
+
+  iti: any;
+
+  constructor(private fService: FormService) {}
 
   closeModal() {
     this.visibleModalBriefing = false;
     this.visibleModalBriefingChange.emit(this.visibleModalBriefing);
-    this.modalSubscription.unsubscribe();
-
     this.form.reset();
+    this.formSendSuccess = false;
+    this.iti.destroy();
   }
 
   ngOnInit(): void {
@@ -44,13 +63,25 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
       email: new FormControl('', [Validators.email, Validators.required]),
       social: new FormControl(''),
       site: new FormControl(''),
+      theme: new FormControl(''),
+      os: new FormControl(''),
+      lang: new FormControl(''),
+      service: new FormControl(''),
+      budget: new FormControl(''),
+      otherOptions: new FormControl(''),
+      textArea: new FormControl(''),
     });
+
+    this.themeList = this.fService.themeList;
+    this.serviceList = this.fService.serviceList;
+    this.otherOptions = this.fService.otherOptions;
   }
+
   ngAfterViewInit() {
     this.modalSubscription = this.modal.onShow.subscribe(() => {
       let inputPhone = document.querySelector('#phone');
       if (inputPhone) {
-        const iti = intlTelInput(inputPhone, {
+        this.iti = intlTelInput(inputPhone, {
           allowDropdown: true,
 
           //autoInsertDialCode: true,
@@ -83,9 +114,9 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
         });
 
         inputPhone.addEventListener('countrychange', () => {
-          let selectedCountryData = iti.getSelectedCountryData();
+          let selectedCountryData = this.iti.getSelectedCountryData();
           //console.log(selectedCountryData);
-          iti.promise.then(() => {
+          this.iti.promise.then(() => {
             // Get an example number for the selected country to use as placeholder.
             var newPlaceholder = intlTelInputUtils.getExampleNumber(
               selectedCountryData.iso2,
@@ -93,12 +124,11 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
               //@ts-ignore
               intlTelInputUtils.numberFormat.INTERNATIONAL
             );
-              this.dialCode = selectedCountryData.dialCode;
-              
-              
-           //console.log(newPlaceholder);
+            this.dialCode = selectedCountryData.dialCode;
 
-            iti.setNumber('');
+            //console.log(newPlaceholder);
+
+            this.iti.setNumber('');
 
             let newPlaceholder2;
 
@@ -109,11 +139,15 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
             }
 
             let onlyNumbers = newPlaceholder2.replace(/[^0-9]/g, '');
+            //console.log(onlyNumbers);
+            let quantityPhoneNumbers = onlyNumbers.length;
+            // console.log(quantityPhoneNumbers);
+            this.quantityPhoneNumbers = quantityPhoneNumbers;
+            //console.log(this.quantityPhoneNumbers);
 
             let mask = newPlaceholder2.replace(/[1-9]/g, '0');
 
             this.phoneMask = mask;
-
           });
         });
       }
@@ -121,11 +155,17 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submit() {
-    console.log({...this.form.value, phone: "+" + this.dialCode + this.form.value.phone});
-    
-    if (this.form.valid) {
-      let formData = { ...this.form.value, phone: "+" + this.dialCode + this.form.value.phone };
+    console.log({
+      ...this.form.value,
+      phone: '+' + this.dialCode + this.form.value.phone,
+    });
 
+    if (this.form.valid) {
+      let formData = {
+        ...this.form.value,
+        phone: '+' + this.dialCode + this.form.value.phone,
+      };
+      this.loading = true;
       emailjs
         .send(
           'service_rpvx3ih',
@@ -136,6 +176,8 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
         .then(
           (result: EmailJSResponseStatus) => {
             console.log(result.text);
+            this.loading = false;
+            this.formSendSuccess = true;
           },
           (error) => {
             console.log(error.text);
@@ -147,8 +189,6 @@ export class ModalBriefComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.form.markAllAsTouched();
     }
-
-    this.modalSubscription.unsubscribe();
   }
 
   ngOnDestroy() {

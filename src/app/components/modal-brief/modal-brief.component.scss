@@ -1,7 +1,5 @@
-
-
 .client-contacts-item {
-  margin-bottom: 30px;
+  margin-bottom: 38px;
   input {
     width: 100%;
   }
@@ -20,3 +18,46 @@ small {
   color: #fca5a5;
 }
 
+h3 {
+  font-size: 20px;
+}
+
+.theme-app-select, .service-select {
+  margin-bottom: 40px;
+}
+.checkbox-os, .checkbox-lang {
+  margin-bottom: 40px;
+  p-checkbox {
+    margin-right: 20px;
+  }
+}
+
+.budget-radio-item {
+  margin-bottom: 30px;
+  p-radioButton {
+    margin-right: 10px;
+  }
+}
+.form-content {
+  display: flex;
+  gap: 40px;
+}
+.right-side-form, .left-side-form {
+  flex: 50%;
+}
+.other-options {
+  margin-bottom: 20px;
+}
+.other-options-list {
+display: flex;
+flex-direction: column;
+p-checkbox {
+  margin-bottom: 10px;
+}
+}
+
+.text-area {
+  textarea {
+    width: 100%;
+  }
+}
